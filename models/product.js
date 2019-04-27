@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     soldCounter: DataTypes.INTEGER,
     uploadDate: DataTypes.DATE,
     price: DataTypes.DECIMAL(10,2),
+    size: DataTypes.INTEGER,
     sellerId: {
       type:DataTypes.INTEGER,
       references: {
