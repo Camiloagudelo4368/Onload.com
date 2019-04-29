@@ -1,0 +1,37 @@
+<h1>User</h1>
+
+<h3>Save the tasks you need to get to later</h3>
+
+<p>User ID: {{userId}}</p>
+<p>User Name: {{userName}}</p>
+<p>First Name: {{firstName}}</p>
+<p>Last Name: {{lastName}}</p>
+Accounts:
+<ul>
+	{{#each this.Accounts}}
+	<li>
+		<p>Bank: {{Bank.bankName}}</p>
+		<p>Number: {{this.number}}</p>
+		<p>Initial Balance: {{this.initBalance}}</p>
+	</li>
+	{{/each}}
+</ul>
+Products:
+<ul>
+
+	{{#each this.Products}}
+	<li>
+		<p>ID: {{this.productId}}</p>
+		<p>Name: {{this.productName}}</p>
+		<p>Description: {{this.description}}</p>
+		<p>Price: ${{this.price}}</p>
+	</li>
+	{{/each}}
+
+</ul>
+
+<form action="/" method="POST">
+	<textarea type="text" name="task"></textarea>
+
+	<button type="submit">Submit</button>
+</form>

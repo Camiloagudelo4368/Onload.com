@@ -25,7 +25,9 @@ module.exports = function (app) {
         userId: req.params.user
       }
     }).then(function (user) {
-      res.json(user);
+      console.log(user);
+      res.render("index", user.dataValues)
+      // res.json(user);
     });
   });
 
