@@ -10,20 +10,23 @@ VALUES
 ("BAGS", NOW(), NOW()), 
 ("SHOES", NOW(), NOW());
 
-INSERT INTO Users (email, userName, firstName, lastName, password, phone, street, city, state, zipcode, type, createdAt, updatedAt)
-values 
-("test@gmail.com",	"Name", "Camilo","Agudelo",	"password",	"123456789",	"St",	"New York",	"NY",	"10128",	"seller", now(),now()),
-("test2@gmail.com",	"Name2", "Gian","Jalaan", "password2",	"123456789",	"St",	"New York",	"NY",	"10128",	"Buyer", now(),now()),
-("test3@gmail.com",	"Name3", "Yolanda","Ramirez","password3",	"123456789",	"St",	"New York",	"NY",	"10128",	"Buyer", now(),now()),
-("test4@gmail.com",	"Name4", "Eugene","Wells","password4",	"123456789",	"St",	"New York",	"NY",	"10128",	"Seller", now(),now());
-
-INSERT INTO Sellers (UseruserId, showName, showAddress, createdAt, updatedAt) 
+INSERT INTO UserTypes (userTypeName, createdAt, updatedAt)
 VALUES 
-(1,1,1,now(),now()),
-(4,1,1,now(),now());
+("Buyer", now(), now()),
+("Seller", now(), now()),
+("Admin", now(), now());
+
+
+INSERT INTO Users (email, userName, firstName, lastName, password, phone, street, city, state, zipcode, UserTypeUserTypeId, createdAt, updatedAt)
+values 
+("test@gmail.com",	"Name", "Camilo","Agudelo",	"password",	"123456789",	"St",	"New York",	"NY",	"10128", 2, now(),now()),
+("test2@gmail.com",	"Name2", "Gian","Jalaan", "password2",	"123456789",	"St",	"New York",	"NY",	"10128", 1, now(),now()),
+("test3@gmail.com",	"Name3", "Yolanda","Ramirez","password3",	"123456789",	"St",	"New York",	"NY",	"10128", 1, now(),now()),
+("test4@gmail.com",	"Name4", "Eugene","Wells","password4",	"123456789",	"St",	"New York",	"NY",	"10128",2, now(),now());
+
 
 INSERT INTO products 
-(productName, description, imgLink, used, initQuantity, availableQuantity, soldCounter, uploadDate, price, size, SellersellerId, createdAt, updatedAt)
+(productName, description, imgLink, used, initQuantity, availableQuantity, soldCounter, uploadDate, price, size, UseruserId, createdAt, updatedAt)
 VALUES 
 ("watch1",	"test1",	"kjlhjk",	1,	20,	20,	0,	now(),	100.00,	12,	1,	NOW(), NOW()),
 ("watch2",	"test2",	"kjlhjk",	1,	20,	20,	0,	now(),	100.00,	12,	2,	NOW(), NOW()),
@@ -53,10 +56,6 @@ VALUES
 ("123456", 10000, 10000, NOW(), NOW(), 3, 3),
 ("123456", 10000, 10000, NOW(), NOW(), 4, 4);
 
-INSERT INTO UserType (userTypeName, createdAt, updatedAt)
-VALUES 
-("Buyer", now(), now()),
-("Seller", now(), now()),
-("Admin", now(), now());
+
 
 

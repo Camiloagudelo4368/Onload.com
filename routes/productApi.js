@@ -1,4 +1,5 @@
 var db = require("../models");
+const Op = require('sequelize').Op;
 
 module.exports = function (app) {
 
@@ -16,6 +17,19 @@ module.exports = function (app) {
         res.json(product);
       });
   });
+
+  app.get("/api/userProduct/:userId", (req, res) => {
+    db.Products.findAll({
+      where: {
+        UserUserId: {
+          [Op.ne]: req.params.userId
+        }
+      }
+    })
+    .then(product => {
+      res.json(product);
+    });
+  })
 
   //Select product based on productId
   app.get("/api/products/:product", function (req, res) {
