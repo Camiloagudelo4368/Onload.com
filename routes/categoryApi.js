@@ -4,14 +4,14 @@ module.exports = function (app) {
 
     // select all categories return an array of categories
     app.get("/api/categories", function (req, res) {
-        db.Products.findAll({}).then(function (categories) {
+        db.Categories.findAll({}).then(function (categories) {
             res.json(categories);
         });
     });
 
     //Select one category based on categoryId
     app.get("/api/categories/:category", function (req, res) {
-        db.Category.findOne({
+        db.Categories.findOne({
             where: {
                 categoryId: req.params.category
             }

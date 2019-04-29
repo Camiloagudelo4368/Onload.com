@@ -15,25 +15,29 @@ module.exports = (sequelize, DataTypes) => {
     availableQuantity: DataTypes.INTEGER,
     soldCounter: DataTypes.INTEGER,
     uploadDate: DataTypes.DATE,
-    price: DataTypes.DECIMAL(10,2),
+    price: DataTypes.DECIMAL(10, 2),
     size: DataTypes.INTEGER,
-    sellerId: {
-      type:DataTypes.INTEGER,
-      references: {
-        model: 'Sellers', // 'Sellers' refers to table name
-        key: 'sellerId', // 'sellerId' refers to column name in Sellers table
-     }
-    },
-    categoryId: {
-      type:DataTypes.INTEGER,
-      references: {
-        model: 'Categories', // 'Categories' refers to table name
-        key: 'categoryId', // 'categoryId' refers to column name in Categories table
-     }
-    }
   }, {});
-  Products.associate = function(models) {
+  Products.associate = function (models) {
     // associations can be defined here
+    models.Products.hasMany(models.CategoryProduct, {
+      onDelete: "cascade"
+    });
+
+    models.Products.hasMany(models.Purchases, {
+      onDelete: "cascade"
+    });
+    
+    models.Products.hasMany(models.shoppingCart, {
+      onDelete: "cascade"
+    });
+
+    Products.belongsTo(models.Sellers, {
+      foreignKey: {
+        allowNull: false
+      },
+    });
+
   };
   return Products;
 };

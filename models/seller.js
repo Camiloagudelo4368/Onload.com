@@ -7,18 +7,17 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    userId: {
-      type:DataTypes.INTEGER,
-      references: {
-        model: 'Users', // 'Users' refers to table name
-        key: 'userId', // 'userId' refers to column name in Users table
-     }
-    },
     showName: DataTypes.BOOLEAN,
     showAddress: DataTypes.BOOLEAN
   });
+
   Sellers.associate = function(models) {
     // associations can be defined here
+    models.Sellers.hasMany(models.Products, {
+      onDelete: "cascade"
+    });
+
+    models.Sellers.belongsTo(models.Users, {onDelete: "cascade"})
   };
   return Sellers;
 };

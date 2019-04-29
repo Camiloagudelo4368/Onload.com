@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: DataTypes.STRING,
     userName: DataTypes.STRING,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
     password: DataTypes.STRING,
     phone: DataTypes.STRING,
     street: DataTypes.STRING,
@@ -19,6 +21,17 @@ module.exports = (sequelize, DataTypes) => {
   });
   Users.associate = function (models) {
     // associations can be defined here
+    models.Users.hasMany(models.Accounts, {
+      onDelete: "cascade"
+    });
+
+    models.Users.hasMany(models.Purchases, {
+      onDelete: "cascade"
+    });
+
+    models.Users.hasMany(models.shoppingCart, {
+      onDelete: "cascade"
+    });
   };
   return Users;
 };
