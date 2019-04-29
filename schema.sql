@@ -42,4 +42,21 @@ VALUES
 (1,1,NOW(),NOW()),
 (1,2,NOW(),NOW()),
 (2,3,NOW(),NOW()),
-(3,1,NOW(),NOW())
+(3,1,NOW(),NOW());
+
+INSERT INTO Banks (bankName, createdAt, updatedAt) VALUES ("Citibank",NOW(),NOW()), ("Chase",NOW(),NOW()), ("Bank of America",NOW(),NOW()), ("Capital One",NOW(),NOW());
+
+INSERT INTO Accounts (number,initBalance,balance,createdAt,updatedAt,BankBankId,UserUserId)
+VALUES 
+("123456", 10000, 10000, NOW(), NOW(), 1, 1),
+("123456", 10000, 10000, NOW(), NOW(), 2, 2),
+("123456", 10000, 10000, NOW(), NOW(), 3, 3),
+("123456", 10000, 10000, NOW(), NOW(), 4, 4);
+
+INSERT INTO UserType (userTypeName, createdAt, updatedAt)
+VALUES 
+("Buyer", now(), now()),
+("Seller", now(), now()),
+("Admin", now(), now());
+
+

@@ -7,13 +7,17 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    alias: DataTypes.STRING,
     number: DataTypes.STRING,
     initBalance: DataTypes.DECIMAL(10,2),
     balance: DataTypes.DECIMAL(10,2),    
   }, {});
   Accounts.associate = function (models) {
     // associations can be defined here
+    Accounts.belongsTo(models.Banks, {
+      foreignKey: {
+        allowNull: false
+      },
+    });
   };
   return Accounts;
 };

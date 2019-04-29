@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     city: DataTypes.STRING,
     state: DataTypes.STRING,
     zipCode: DataTypes.INTEGER,
-    type: DataTypes.STRING
   });
   Users.associate = function (models) {
     // associations can be defined here
@@ -32,6 +31,15 @@ module.exports = (sequelize, DataTypes) => {
     models.Users.hasMany(models.shoppingCart, {
       onDelete: "cascade"
     });
+    
+    models.Users.belongsTo(models.UserType, {
+      onDelete: "cascade"
+    })
+
+    models.Users.hasMany(models.Products, {
+      onDelete: "cascade"
+    })
+
   };
   return Users;
 };

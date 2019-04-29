@@ -2,10 +2,11 @@ var db = require("../models");
 
 //Accounts of the userId
 module.exports = function (app) {
-    app.get("/api/acoount/:user", function (req, res) {
+    app.get("/api/account/:user", function (req, res) {
         db.Accounts.findAll({
+            include:[db.Banks],            
             where: {
-                userId: req.params.user
+                UseruserId: req.params.user
             }
         }).then(account => {
             res.json(account);
@@ -14,16 +15,18 @@ module.exports = function (app) {
 
     app.post("/api/account", function (req, res) {
         var accountObject = {
-            alias: req.body.alias,
-            number: "1234567",
+            number: req.body.number,
             initBalance: req.body.ammount,
             balance: req.body.ammount,
-            userId: req.body.userId,
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            UserUserId: req.body.userId,
+            BankBankId: req.body.bankId,
+            createdAt: req.body.createdAt,
+            updatedAt: req.body.updatedAt,
         }
 
-        db.Users.create(accountObject).then(account => {
+        console.log(req.body)
+
+        db.Accounts.create(accountObject).then(account => {
             res.json(account);
         });
     });

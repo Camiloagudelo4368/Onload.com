@@ -1,8 +1,26 @@
 var db = require("../models");
 
 module.exports = function (app) {
-  app.get("/api/acoount/:user", function (req, res) {
-    db.Accounts.findAll({
+  app.get("/api/user/:user", function (req, res) {
+    db.Users.findOne({
+      include: [
+      {
+        model: db.Accounts,
+        include:[db.Banks]
+      },
+        {
+          model: db.UserType
+      },
+      {
+        model:db.Products,
+        include:[
+          {
+            model: db.CategoryProduct,
+            include:[db.Categories]
+          }
+        ]
+      }
+    ],
       where: {
         userId: req.params.user
       }

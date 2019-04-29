@@ -5,6 +5,17 @@ module.exports = (sequelize, DataTypes) => {
   
   CategoryProduct.associate = function(models) {
     // associations can be defined here
+    CategoryProduct.belongsTo(models.Products, {
+      foreignKey: {
+        allowNull: false
+      },
+    });
+
+    CategoryProduct.belongsTo(models.Categories, {
+      foreignKey: {
+        allowNull: false
+      },
+    });
   };
   return CategoryProduct;
 };
