@@ -69,7 +69,12 @@ console.log('this is data', objUserTypeAll)
     }
 
     db.Users.create(userObject).then(user => {
+      
+      
       res.json(user);
+      // db.Accounts.create(ObjAccount).then(account =>{
+
+      })
     });
   });
 };

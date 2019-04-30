@@ -56,7 +56,21 @@ module.exports = function (app) {
 
 
   app.post("/api/product", function (req, res) {
-    db.Products.create(req.body).then(function (product) {
+    var obj = {
+      productName: req.body.productName,
+      description: req.body.description,
+      imgLink: req.body.imgLink,
+      used: req.body.used,
+      initQuantity: req.body.initQuantity,
+      availableQuantity: req.body.availableQuantity,
+      soldCounter: req.body.soldCounter,
+      price: req.body.price,
+      size: req.body.size,
+      sellerId: req.body.sellerId,
+      categoryId: req.body.categoryId
+    }
+    
+    db.Products.create(obj).then(function (product) {
       res.json(product);
     });
   });
