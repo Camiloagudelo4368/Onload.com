@@ -20,6 +20,21 @@ module.exports = function (app) {
         });
     });
 
+    //Select one category based on ProductId
+    app.get("/categories/:productId", function (req, res) {
+        db.Categories.findOne({
+            include: [{
+                model: [db.CategoryProduct],
+                where: {
+                    ProductProductId: req.params.productId
+                }
+            }
+            ]
+        }).then(category => {
+            res.json(category);
+        });
+    });
+
     app.get("/api/authors/:id", function (req, res) {
         db.Author.findOne({
             where: {

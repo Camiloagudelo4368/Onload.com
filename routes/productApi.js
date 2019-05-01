@@ -1,3 +1,4 @@
+
 var db = require("../models");
 const Op = require('sequelize').Op;
 
@@ -26,9 +27,9 @@ module.exports = function (app) {
         }
       }
     })
-    .then(product => {
-      res.json(product);
-    });
+      .then(product => {
+        res.json(product);
+      });
   })
 
   //Select product based on productId
@@ -69,7 +70,7 @@ module.exports = function (app) {
       sellerId: req.body.sellerId,
       categoryId: req.body.categoryId
     }
-    
+
     db.Products.create(obj).then(function (product) {
       res.json(product);
     });
