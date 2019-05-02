@@ -10,12 +10,30 @@ $(document).ready(function () {
         });
     }
 
-    function createNavBar(data) {
-        // console.log("check ", ls("UserId"))
-
+    function createNavBar(data) {        
         data.forEach(element => {
             $("#categoriesMenu").append(`<li class="nav-item">
             <a class="nav-link" href="/products/${element.categoryId}">${element.categoryName}</a></li>`)
         });
     }
+
+    $(document).on("click", ".buyProductsubmitBtn", event=>{
+        // $(".buyProductsubmitBtn").on("click", event => {
+            var obj = {
+                productId: $("#productId").text(),
+                quantity: $("#quantity").text(),
+                price: $("#price").text()
+            }
+        
+            $.post("/api/shoppingCart", obj, function (data) {
+                if (data) {
+                    alert("Item added to your Shopping Cart")    
+                }
+                else{
+                    alert("Problems adding the item to your shopping cart")    
+                }
+                
+            });
+        })
+        
 })

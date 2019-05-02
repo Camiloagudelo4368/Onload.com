@@ -30,6 +30,7 @@ app.use(express.static("public"));
  require("./routes/productApi.js")(app);
  require("./routes/userApi.js")(app);
  require("./routes/accountApi.js")(app);
+ require("./routes/shoppingCartApi.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================

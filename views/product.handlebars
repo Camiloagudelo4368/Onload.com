@@ -3,6 +3,11 @@
 </style> --}}
 
 <div class="cart" id="myBtn"><button>Shopping Cart</button></div>
+<div>
+    <label id="message">{{message}}</label>
+</div>
+
+
 <div class="form-row">
     <div class="col-md-11 mb-3">
         <center>
@@ -15,22 +20,27 @@
     <div class="h2 text-center"> {{category.categoryName}}</div>
 
     {{#each products}}
+
     <div class="col-md-2 column productbox">
-        <div class="producttitle">Product Id: {{this.productId}}</div>
+        <div class="producttitle">Product Id: <span id="productId">{{this.productId}}</span></div>
         <img src="{{this.imgLink}}" class="img-responsive">
-        <div class="producttitle">Date Posted: {{ formatDate this.uploadDate day="numeric" month="long" year="numeric"}}
+        <div class="producttitle">Date Posted:
+            {{ formatDate this.uploadDate day="numeric" month="long" year="numeric"}}
         </div>
-        {{!-- <div id="categoryName" class="producttitle">Category Name: {{category.categoryName}}</div> --}}
+        <div id="categoryName" class="producttitle">Category Name: {{this.categoryName}}</div>
         <div class="producttitle">Product Name: {{this.productName}}</div>
-        <div class="producttitle">Product Quantity: {{this.availableQuantity}}</div>
-        <div class="producttitle">Description: {{this.description}}</div>
-        <div class="productprice">Unit Price: {{this.price}}
-            <div class="pull-right"><a href="#" class="btn btn-danger btn-sm" role="button">BUY</a></div>
+        <div id="" class="producttitle">Product Quantity: <span id="availableQuantity">{{this.availableQuantity}}</span>
         </div>
-        {{/each}}
-        
+        <div class="producttitle">Description: {{this.description}}</div>
+        <div class="productprice">Unit Price: <span id="price">{{this.price}}</span></div>
+        <label>Quantity</label>
+        <input name="availableQuantityCapture" type="number">
+        <button data-productId="{{this.productId}}" class="btn btn-danger buyProductSubmitBtn">BUY</button>
+    </div>
+    {{/each}}
 
 </ul>
+
 <!-- Modal content -->
 <div class="modal-content">
     <div class="modal-header">

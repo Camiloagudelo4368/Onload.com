@@ -6,7 +6,7 @@
 // =============================================================
 var path = require("path");
 var db = require("../models");
-
+var ls = require('local-storage');
 // Routes
 // =============================================================
 module.exports = function (app) {
@@ -15,6 +15,8 @@ module.exports = function (app) {
 
   // index route loads view.html
   app.get("/", (req, res) => {
+
+    console.log("check ", ls("UserId"))
     res.render("index")
     // res.sendFile(path.join(__dirname, "../public/index.html"));
   });
@@ -65,89 +67,53 @@ module.exports = function (app) {
         }
       ],
     }).then(function (product) {
-
+      
       db.Categories.findOne({
         raw: true,
         where:
         {
           categoryId: req.params.categoryId
         }
-      })
-        .then(category => {
-          var objProduct = {
-            products: product,
-            category: category
-          }
+      }).then(category => {
 
-          // console.log(objProduct.category)
-          res.render("product", objProduct);
-        });
+        var objProduct = {
+          products: product,
+          category: category,
+        }
+
+        // console.log(objProduct)
+        res.render("product", objProduct);
+      });
     });
   })
 
-  // bring the information and render the products page
+  // bring all products
   app.get("/products", (req, res) => {
     db.Products.findAll({
       // plain:true,
       raw: true,
       // hierarchy: true,
-      include: [
-        {
-          model: db.CategoryProduct,
-        }
+      include: [{
+        model: db.CategoryProduct,
+        include: [db.Categories]
+      }
       ],
-    }).then(function (product) {
+    })
+      .then(function (product) {
 
-      db.Categories.findAll({
-        raw: true        
-      })
-        .then(category => {
-          var objProduct = {
-            products: product,
-            category: category
-          }
+        // console.log(product[0]['CategoryProducts.Category.categoryName'])
+        // console.log('see above hhhh')
+        product.forEach(item => item.categoryName = item['CategoryProducts.Category.categoryName'])
 
-          // console.log(objProduct.category)
-          res.render("product", objProduct);
-        });
-    });
+        // console.log('after')
+        // console.log(product)
+
+        var objProduct = {
+          products: product,
+        }
+
+        // console.log(objProduct)
+        res.render("product", objProduct);
+      });
   })
-
-
-
-  //   // bring all products
-  //   app.get("/products", (req, res) => {
-  //     db.Products.findAll({
-  //       // plain:true,
-  //       // raw: true,
-  //       // hierarchy: true,
-  //       include: [{
-  //         model: db.CategoryProduct,
-  //         include: [db.Categories]
-  //       }
-  //       ],
-  //     })
-  //       .then(function (product) {
-
-  //         console.log(product.CategoryProducts)
-
-  //         db.Categories.findOne({
-  //           raw: true,
-  //           where:
-  //           {
-  //             categoryId: product
-  //           }
-  //         })
-  //           .then(category => {
-
-  //             var objProduct = {
-  //               products: product,
-  //               category: category
-  //             }
-
-  //             // console.log(objProduct.category)
-  //             res.render("product", objProduct);
-  //           });
-  //       });
-  //   })
 };

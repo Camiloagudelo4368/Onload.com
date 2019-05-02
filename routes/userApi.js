@@ -14,9 +14,9 @@ module.exports = function (app) {
       if (user) {
         bcrypt.compare(req.body.password, user.password, function (err, resPass) {
           if (resPass) {
-            console.log("user  ", user.userId)
+            // console.log("user  ", user.userId)
             ls.set('UserId', user.userId)
-            console.log("check ", ls("UserId"))
+            // console.log("check ", ls("UserId"))
             res.render("index")
             // Passwords match
           } else {
