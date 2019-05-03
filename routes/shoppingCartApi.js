@@ -2,7 +2,7 @@
 var db = require("../models");
 const Op = require('sequelize').Op;
 var ls = require('local-storage');
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 
 module.exports = function (app) {
 
