@@ -24,7 +24,7 @@ module.exports = function (app) {
   app.get("/cart", (req, res) => {
 
     db.shoppingCart.findAll({}).then(shoppingCart =>{
-      res.render("shoppingCart")
+      res.render("shoppingcart")
     })
 
     // res.sendFile(path.join(__dirname, "../public/index.html"));
