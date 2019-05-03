@@ -16,6 +16,7 @@ module.exports = function (app) {
           if (resPass) {
             // console.log("user  ", user.userId)
             ls.set('UserId', user.userId)
+            ls.set('UserName', user.userName)
             // console.log("check ", ls("UserId"))
             res.render("index")
             // Passwords match
@@ -107,7 +108,14 @@ module.exports = function (app) {
       }
 
       db.Users.create(userObject).then(user => {
-        res.json(user);
+        // res.json(user);
+
+        // console.log("user  ", user.userId)
+        ls.set('UserId', user.userId)
+        ls.set('UserName', user.userName)
+
+        // console.log("check ", ls("UserId"))
+        res.render("index")
         // db.Accounts.create(ObjAccount).then(account =>{
 
       })

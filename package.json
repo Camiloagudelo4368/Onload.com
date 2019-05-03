@@ -24,6 +24,7 @@
     "handlebars-intl": "^1.1.2",
     "local-storage": "^2.0.0",
     "mysql2": "^1.6.5",
+    "nodemon": "^1.19.0",
     "path": "^0.12.7",
     "sequelize": "^5.7.6",
     "sequelize-cli": "^5.4.0",

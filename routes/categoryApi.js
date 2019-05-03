@@ -1,11 +1,20 @@
 var db = require("../models");
+var ls = require('local-storage');
 
 module.exports = function (app) {
 
     // select all categories return an array of categories
     app.get("/api/categories", function (req, res) {
         db.Categories.findAll({}).then(function (categories) {
-            res.json(categories);
+            
+            var userName = ls.get('UserName');
+
+            var obj = {
+                categories: categories,
+                user : userName
+            }
+            
+            res.json(obj);
         });
     });
 
@@ -34,31 +43,4 @@ module.exports = function (app) {
             res.json(category);
         });
     });
-
-    app.get("/api/authors/:id", function (req, res) {
-        db.Author.findOne({
-            where: {
-                id: req.params.id
-            }
-        }).then(function (dbAuthor) {
-            res.json(dbAuthor);
-        });
-    });
-
-    app.post("/api/authors", function (req, res) {
-        db.Author.create(req.body).then(function (dbAuthor) {
-            res.json(dbAuthor);
-        });
-    });
-
-    app.delete("/api/authors/:id", function (req, res) {
-        db.Author.destroy({
-            where: {
-                id: req.params.id
-            }
-        }).then(function (dbAuthor) {
-            res.json(dbAuthor);
-        });
-    });
-
 };

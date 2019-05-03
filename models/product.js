@@ -25,11 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     models.Products.hasMany(models.Purchases, {
-      onDelete: "cascade"
+      onDelete: "cascade",
+      primaryKey: true
     });
     
     models.Products.hasMany(models.shoppingCart, {
-      onDelete: "cascade"
+      onDelete: "cascade",
+      primaryKey: true
     });
 
     Products.belongsTo(models.Users, {

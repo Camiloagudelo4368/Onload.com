@@ -1,13 +1,8 @@
-{{!-- <style>
-    
-</style> --}}
+<link rel="stylesheet" href="/css/product.css">
 
-<div class="cart" id="myBtn"><button>Shopping Cart</button></div>
 <div>
     <label id="message">{{message}}</label>
 </div>
-
-
 <div class="form-row">
     <div class="col-md-11 mb-3">
         <center>
@@ -16,72 +11,113 @@
 
     </div>
 </div>
-<ul>
-    <div class="h2 text-center"> {{category.categoryName}}</div>
+<div class="h2 text-center"> {{category.categoryName}}</div>
 
-    {{#each products}}
-
-    <div class="col-md-2 column productbox">
-        <div class="producttitle">Product Id: <span id="productId">{{this.productId}}</span></div>
-        <img src="{{this.imgLink}}" class="img-responsive">
-        <div class="producttitle">Date Posted:
-            {{ formatDate this.uploadDate day="numeric" month="long" year="numeric"}}
+<div class="mx-auto">
+    <div class="productRow row align-center">
+        {{#each products}}
+        <div class="productColumn col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="container-fliud">
+                <div class="wrapper row">
+                    <div class="preview col-md-6">
+                        <div class="preview-pic tab-content">
+                            <div class="tab-pane active" id="pic-1"><img src="{{this.imgLink}}"
+                                    class="img-responsive" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details col-md-6">
+                        <h3 class="product-title">{{this.productName}}</h3>
+                        <p class="vote"><strong>Available Quantity: </strong> {{this.availableQuantity}} </p>
+                        <p class="product-description">{{this.description}}</p>
+                        <h4 class="price">Current price: <span>{{this.price}}</span></h4>
+                        <p class="vote"><strong>Dated Posted: </strong>
+                            {{ formatDate this.uploadDate day="numeric" month="long" year="numeric"}}</p>
+                        <small>Quantity</small>
+                        <div><input class="productQuantity" id="productQuantity{{this.productId}}" type="number"
+                                value="1"></input>
+                            <button data-productName="{{this.productName}}" data-quantity="{{this.availableQuantity}}"
+                                data-img="{{this.imgLink}}" data-price="{{this.price}}"
+                                data-productid="{{this.productId}}" class="buyProductSubmitBtn btn-outline-success" type="submit">add to
+                                cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="categoryName" class="producttitle">Category Name: {{this.categoryName}}</div>
-        <div class="producttitle">Product Name: {{this.productName}}</div>
-        <div id="" class="producttitle">Product Quantity: <span id="availableQuantity">{{this.availableQuantity}}</span>
-        </div>
-        <div class="producttitle">Description: {{this.description}}</div>
-        <div class="productprice">Unit Price: <span id="price">{{this.price}}</span></div>
-        <label>Quantity</label>
-        <input name="availableQuantityCapture" type="number">
-        <button data-productId="{{this.productId}}" class="btn btn-danger buyProductSubmitBtn">BUY</button>
-    </div>
-    {{/each}}
-
-</ul>
-
-<!-- Modal content -->
-<div class="modal-content">
-    <div class="modal-header">
-        <span class="close">&times;</span>
-        <h2>Modal Header</h2>
-    </div>
-    <div class="modal-body">
-        <p>Some text in the Modal Body</p>
-        <p>Some other text...</p>
-    </div>
-    <div class="modal-footer">
-        <h3>Modal Footer</h3>
+        {{/each}}
     </div>
 </div>
 
-{{!-- <script src="js/main.js" type="text/javascript"></script> --}}
 
-{{!-- <script>
-    // Get the modal
-    var modal = document.getElementById('myModal');
+<div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Added to cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card" style="w-100">
+                    <img id="imgModal" class="card-img-top" alt="Card image cap">
+                    <div class="card-body">
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+                        <p id="modalProductName" class="card-text"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li id="modalProductPrice" class="list-group-item"></li>
+                        <li id="modalProductQuantity" class="list-group-item"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                <button id="btnModalCart" href="/cart" type="button" class="btn btn-primary">Go to your Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+{{!-- <div class="modal fade text-center" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" hidden
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Match</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 id="productName"></h2>
+                <img id="imgModal" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> --}}
 
-    // When the user clicks the button, open the modal 
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script> --}}
+{{!-- <!-- Modal content --> --}}
+{{!-- <div id="modalProduct" class="modal-body">
+    <div class="card" style="width: 18rem;">
+        <img id="imgModal" class="card-img-top" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Added to cart</h5>
+            <p id="modalProductName" class="card-text"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li id="modalProductPrice" class="list-group-item"></li>
+            <li id="modalProductQuantity" class="list-group-item"></li>
+        </ul>
+        <div class="card-body">
+            <a href="/shoppingCart" class="btn btn-primary">Cart</a>
+            <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+        </div>
+    </div>
+</div> --}}

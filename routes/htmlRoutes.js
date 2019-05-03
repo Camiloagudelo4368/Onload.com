@@ -16,13 +16,17 @@ module.exports = function (app) {
   // index route loads view.html
   app.get("/", (req, res) => {
 
-    console.log("check ", ls("UserId"))
+    // console.log("check ", ls("UserId"))
     res.render("index")
     // res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
   app.get("/cart", (req, res) => {
-    res.render("shoppingCart")
+
+    db.shoppingCart.findAll({}).then(shoppingCart =>{
+      res.render("shoppingCart")
+    })
+
     // res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
@@ -52,6 +56,17 @@ module.exports = function (app) {
     res.render("signin");
   })
 
+  // LogOut request
+  app.get("/signout", (req, res) => {
+
+    // Remove local storage var
+    ls.clear()
+
+    res.render("index");
+  })
+
+
+
   // bring the information and render the products page
   app.get("/products/:categoryId", (req, res) => {
     db.Products.findAll({
@@ -67,7 +82,7 @@ module.exports = function (app) {
         }
       ],
     }).then(function (product) {
-      
+
       db.Categories.findOne({
         raw: true,
         where:

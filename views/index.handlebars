@@ -83,10 +83,10 @@
             and that is why we have our sellers go through a verification process. 
             We also offer a full refund if you are not 100% satisfied with in 30 days.</p>
         </div>
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+        <div id="categoriesMenuIndex" class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4" style="text-align:left">
           <h6 class="text-uppercase font-weight-bold">Products</h6>
           <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>
+          {{!-- <p>
             <a href="watches.html">Watches</a>
           </p>
           <p>
@@ -94,7 +94,10 @@
           </p>
           <p>
             <a href="bags.html">Bags</a>
-          </p>
+          </p> --}}
+          {{!-- <ul style="list-style: none; text-align:left;" id="categoriesMenuIndex">
+            
+          </ul> --}}
         </div>
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <h6 class="text-uppercase font-weight-bold">Useful links</h6>
@@ -132,4 +135,29 @@
     </div>
   </div>
 </div>
+<script>
+  
+    getCategories();
+    // This function grabs todos from the database and updates the view
+    function getCategories() {
+        $.get("/api/categories", function (data) {
+            // console.log(data)
+            createNavDown(data);
+
+            // console.log(data)
+        }).then(res => {
+            // console.log(data)
+        });
+    }
+
+    function createNavDown(data) {
+        
+        data.categories.forEach(element => {
+            $("#categoriesMenuIndex").append(`<li class="nav-item" style="list-style:none">
+            <a class="nav-link" href="/products/${element.categoryId}">${element.categoryName}</a></li>`)
+        });
+
+    }
+  
+</script>
 {{!-- -- ------------------ -- --}}
