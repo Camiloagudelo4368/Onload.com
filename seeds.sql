@@ -20,7 +20,7 @@ values
 ("test3@gmail.com",	"Name3", "Yolanda","Ramirez","password3",	"123456789",	"St",	"New York",	"NY",	"10128", 1, 0, now(),now()),
 ("test4@gmail.com",	"Name4", "Eugene","Wells","password4",	"123456789",	"St",	"New York",	"NY",	"10128",2, 0, now(),now());
 
-INSERT INTO products 
+INSERT INTO Products 
 (productName, description, imgLink, used, initQuantity, availableQuantity, soldCounter, uploadDate, price, size, UseruserId, createdAt, updatedAt)
 VALUES 
 ("Andoer Laptop Backpack",	
