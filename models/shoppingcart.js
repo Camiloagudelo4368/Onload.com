@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     couponCode: DataTypes.STRING,
   }, {});
   shoppingCart.associate = function (models) {
+    models.shoppingCart.belongsTo(models.Products, {});
     // associations can be defined here
   };
   return shoppingCart;

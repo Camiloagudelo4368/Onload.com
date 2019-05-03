@@ -23,9 +23,37 @@ module.exports = function (app) {
 
   app.get("/cart", (req, res) => {
 
-    db.shoppingCart.findAll({}).then(shoppingCart => {
-      res.render("shoppingcart")
-    })
+    db.shoppingCart.findAll(
+      {
+        raw: true,
+        include: [{
+          model: db.Products,
+          include: [{
+            model: db.CategoryProduct,
+            include: [db.Categories]
+          }]
+        }]
+      }, {
+        where: {
+          UserUserId: ls.get("userId")
+        }
+      }).then(shoppingCart => {
+
+        shoppingCart.forEach(item => item.categoryName = item['Product.CategoryProducts.Category.categoryName'])
+        shoppingCart.forEach(item => item.imgLink = item['Product.imgLink'])
+        shoppingCart.forEach(item => item.productName = item['Product.productName'])
+        shoppingCart.forEach(item => item.subtotalValue = item['price'] * item['quantity'])
+
+        // shoppingCart.forEach(item => item.categoryName = item['Product.CategoryProducts.Category.categoryName'])
+
+        console.log(shoppingCart)
+
+        var objUserTypeAll = {
+          products: shoppingCart,
+        }
+
+        res.render("shoppingcart", objUserTypeAll)
+      })
 
     // res.sendFile(path.join(__dirname, "../public/index.html"));
   });
@@ -126,7 +154,7 @@ module.exports = function (app) {
         var newproduct = []
 
         // Procedure to delete duplicate products
-        for (let i = 0; i < product.length - 1 ; i++) {
+        for (let i = 0; i < product.length - 1; i++) {
 
           console.log(product[i].productId, product[i + 1].productId, product.length)
           const element = product[i];
