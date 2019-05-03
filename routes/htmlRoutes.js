@@ -23,7 +23,7 @@ module.exports = function (app) {
 
   app.get("/cart", (req, res) => {
 
-    db.shoppingCart.findAll({}).then(shoppingCart =>{
+    db.shoppingCart.findAll({}).then(shoppingCart => {
       res.render("shoppingcart")
     })
 
@@ -122,11 +122,26 @@ module.exports = function (app) {
 
         // console.log('after')
         // console.log(product)
+        var indexFinal = product.length - 1;
+        var newproduct = []
+
+        // Procedure to delete duplicate products
+        for (let i = 0; i < product.length - 1 ; i++) {
+
+          console.log(product[i].productId, product[i + 1].productId, product.length)
+          const element = product[i];
+          const element2 = product[i + 1];
+
+          if (element.productId != element2.productId) {
+            newproduct.push(element)
+          }
+        }
+        // push the last element
+        newproduct.push(product[indexFinal])
 
         var objProduct = {
-          products: product,
+          products: newproduct,
         }
-
         // console.log(objProduct)
         res.render("product", objProduct);
       });
