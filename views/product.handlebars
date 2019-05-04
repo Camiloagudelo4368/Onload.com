@@ -16,7 +16,7 @@
 <div class="mx-auto">
     <div class="productRow row align-center">
         {{#each products}}
-        <div class="productColumn col col-lg-4 col-md-6 col-sm-6 col-xs-12">
+        <div class="productColumn col-lg-4 col-md-6 col-sm-6 col-xs-12">
             <div class="container-fliud">
                 <div class="wrapper row">
                     <div class="preview col-md-6">
@@ -30,7 +30,7 @@
                         <h3 class="product-title">{{this.productName}}</h3>
                         <p class="vote"><strong>Available Quantity: </strong> {{this.availableQuantity}} </p>
                         <p class="product-description">{{this.description}}</p>
-                        <h4 class="price">Current price: <span>{{this.price}}</span></h4>
+                        <h4 class="price">Current price: <span>${{this.price}}</span></h4>
                         <p class="vote"><strong>Dated Posted: </strong>
                             {{ formatDate this.uploadDate day="numeric" month="long" year="numeric"}}</p>
                         <small>Quantity</small>
