@@ -88,11 +88,13 @@ module.exports = function (app) {
           res.render("shoppingcart", objUserTypeAll)
         }else{
           res.send("noItems")
+          // res.send("noItems")
         }
       })
     }
     else {
       res.send("noUser");
+      // res.render("shoppingcart");
     }
     // res.sendFile(path.join(__dirname, "../public/index.html"));
   });

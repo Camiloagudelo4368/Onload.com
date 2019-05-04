@@ -62,17 +62,36 @@ module.exports = function (app) {
 
   app.delete("/api/shoppingCart/:productId", (req, res) => {
     var userId = ls.get("UserId");
-    console.log("User: ",userId)
-    
+    console.log("User: ", userId)
+
     db.shoppingCart.destroy({
       where: {
         ProductProductId: req.params.productId,
         UserUserId: parseInt(userId)
       }
-    }).then( result =>{
+    }).then(result => {
       // res.render("/Cart", result)
       res.send("deleted")
     })
   })
+
+  app.put("/api/shoppingCart/:productId/:newQuantity", (req, res) => {
+    var userId = ls.get("UserId");
+    console.log("User: ", userId)
+    db.shoppingCart.update(
+      {
+        quantity: req.params.newQuantity,
+      },
+      {
+        where: {
+          ProductProductId: req.params.productId,
+          UserUserId: parseInt(userId)
+        }
+      }).then(result => {
+        // res.render("/Cart", result)
+        res.send("updated")
+      })
+  })
+
 
 }
