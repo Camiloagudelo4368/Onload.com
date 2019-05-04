@@ -36,27 +36,21 @@ module.exports = function (app) {
             db.shoppingCart.update(
               { quantity: result.quantity + 1 },
               {
-                // {
                 where: {
                   ProductProductId: obj.ProductProductId,
                   UserUserId: obj.UserUserId
                 }
-                // }
-              }).then(shoppingCart =>{
+              }).then(shoppingCart => {
                 res.send(shoppingCart)
               })
           }
           else {
-            db.shoppingCart.create(obj).then(shoppingCart=>{
+            db.shoppingCart.create(obj).then(shoppingCart => {
               res.send(shoppingCart)
             })
           }
 
         })
-        // then(function (error,shoppingCart) {
-        //   console.log("error :",error, "body", shoppingCart)
-        //   res.send(shoppingCart)
-        // });
       } else {
         res.render("product", { message: "Unavailble quantity" })
       }
@@ -64,10 +58,18 @@ module.exports = function (app) {
     else {
       res.send("noUser");
     }
-
-    // console.log(req.body.availableQuantity, req.body.availableQuantityCapture)
-
-
   });
+
+  app.delete("/api/shoppingCart/:productId", (req, res) => {
+    db.shoppingCart.destroy({
+      where: {
+        ProductProductId: req.params.productId,
+        UserUserId: parse.integer(ls.get("userId"))
+      }
+    }).then( result =>{
+      // res.render("/Cart")
+      res.json(result)
+    })
+  })
 
 }

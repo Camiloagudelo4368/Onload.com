@@ -18,7 +18,7 @@ module.exports = function (app) {
             ls.set('UserId', user.userId)
             ls.set('UserName', user.userName)
             // console.log("check ", ls("UserId"))
-            res.render("index")
+            res.render("index")            
             // Passwords match
           } else {
             res.render("signin", { message: "User or Password incorrect" })

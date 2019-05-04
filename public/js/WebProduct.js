@@ -75,5 +75,26 @@ $(document).on("click", ".buyProductSubmitBtn", event => {
 })
 
 $(document).on("click", "#btnModalCart", event => {
-    location.assign("/cart")
+
+    $.get("/cart", function (data) {
+        if (data === "noUser") {
+            location.assign("/signin")
+
+            // $.get("/signin", (req, res) => {
+            //     console.log(res)
+            // })
+            // console.log("Problems adding the item to your shopping cart")
+        }
+        else {
+            $.get("/cart", function (data) {
+                if (data === "noItems") {
+                    alert("You have no items on your cart")
+                }
+                else{
+                    location.assign("/cart")
+                }
+            })
+        }
+
+    })
 })

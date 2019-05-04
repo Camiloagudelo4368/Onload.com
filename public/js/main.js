@@ -35,7 +35,30 @@ $(document).ready(function () {
 
     }
 
+    $(document).on("click", "#btnCartMain", event => {
+
+        $.get("/cart", function (data) {
+            if (data === "noUser") {
+                location.assign("/signin")
     
+                // $.get("/signin", (req, res) => {
+                //     console.log(res)
+                // })
+                // console.log("Problems adding the item to your shopping cart")
+            }
+            else {
+                $.get("/cart", function (data) {
+                    if (data === "noItems") {
+                        alert("You have no items on your cart")
+                    }
+                    else{
+                        location.assign("/cart")
+                    }
+                })
+            }
+    
+        })
+    })
 
     // $(document).on("click", ".buyProductsubmitBtn", event=>{
     //     // $(".buyProductsubmitBtn").on("click", event => {

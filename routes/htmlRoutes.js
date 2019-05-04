@@ -7,6 +7,7 @@
 var path = require("path");
 var db = require("../models");
 var ls = require('local-storage');
+var stripe = require("stripe")("sk_test_ImIMOUWDAJKtwCrDymTb8u9k00aVI0ZHEM");
 // Routes
 // =============================================================
 module.exports = function (app) {
@@ -22,10 +23,16 @@ module.exports = function (app) {
   });
 
   app.get("/cart", (req, res) => {
+    var userId = ls.get("UserId");
+    console.log("Body: ", req.body, userId)
 
-    db.shoppingCart.findAll(
-      {
+    if (userId) {
+      db.shoppingCart.findAll({
         raw: true,
+        where: {
+          UserUserId: userId
+        },
+
         include: [{
           model: db.Products,
           include: [{
@@ -33,28 +40,59 @@ module.exports = function (app) {
             include: [db.Categories]
           }]
         }]
-      }, {
-        where: {
-          UserUserId: ls.get("userId")
-        }
       }).then(shoppingCart => {
+        console.log("Cart", shoppingCart)
+        
+        if (shoppingCart[0]) {
+          // console.log("nothing")
+          shoppingCart.forEach(item => item.categoryName = item['Product.CategoryProducts.Category.categoryName'])
+          shoppingCart.forEach(item => item.imgLink = item['Product.imgLink'])
+          shoppingCart.forEach(item => item.productName = item['Product.productName'])
+          shoppingCart.forEach(item => item.subtotalValue = (item['price'] * item['quantity']).toFixed(2))
+          shoppingCart.forEach(item => item.productDescription = item['Product.description'])
+          shoppingCart.forEach(item => item.productId = item['Product.productId'])
 
-        shoppingCart.forEach(item => item.categoryName = item['Product.CategoryProducts.Category.categoryName'])
-        shoppingCart.forEach(item => item.imgLink = item['Product.imgLink'])
-        shoppingCart.forEach(item => item.productName = item['Product.productName'])
-        shoppingCart.forEach(item => item.subtotalValue = item['price'] * item['quantity'])
 
-        // shoppingCart.forEach(item => item.categoryName = item['Product.CategoryProducts.Category.categoryName'])
+          // console.log(shoppingCart)
+          // shoppingCart.forEach(item => item.categoryName = item['Product.CategoryProducts.Category.categoryName'])
 
-        console.log(shoppingCart)
+          var indexFinal = shoppingCart.length - 1;
+          var newproduct = []
+          var total = 0
 
-        var objUserTypeAll = {
-          products: shoppingCart,
+
+          // Procedure to delete duplicate products
+          for (let i = 0; i < shoppingCart.length - 1; i++) {
+
+            console.log(shoppingCart[i].subtotalValue, shoppingCart[i + 1].ProductProductId, shoppingCart.length, total)
+            const element = shoppingCart[i];
+            const element2 = shoppingCart[i + 1];
+
+            if (element.ProductProductId != element2.ProductProductId) {
+              newproduct.push(element)
+              total += parseFloat(element.subtotalValue);
+            }
+          }
+          // push the last element
+          total += parseFloat(shoppingCart[indexFinal].subtotalValue);
+          newproduct.push(shoppingCart[indexFinal])
+
+          console.log("total", total)
+
+          var objUserTypeAll = {
+            products: newproduct,
+            total: total.toFixed(2)
+          }
+
+          res.render("shoppingcart", objUserTypeAll)
+        }else{
+          res.send("noItems")
         }
-
-        res.render("shoppingcart", objUserTypeAll)
       })
-
+    }
+    else {
+      res.send("noUser");
+    }
     // res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
@@ -93,7 +131,26 @@ module.exports = function (app) {
     res.render("index");
   })
 
+  app.post('/paysuccess', function (req, res) {
+    res.render('paysuccess', {
 
+    });
+  });
+
+  app.post('/charge', function (req, res) {
+    var token = req.body.stripeToken;
+
+    var charge = stripe.charges.create({
+      amount: 1700, // create a charge for 1700 cents USD ($17)
+      currency: 'usd',
+      description: 'Bargain Basement Charge',
+      source: token,
+    }, function (err, charge) {
+      if (err) { console.warn(err) } else {
+        res.status(200).send(charge)
+      }
+    })
+  });
 
   // bring the information and render the products page
   app.get("/products/:categoryId", (req, res) => {
