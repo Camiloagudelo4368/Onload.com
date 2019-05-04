@@ -8,7 +8,9 @@ function removeProduct(productId){
       type: "DELETE",
       url: productUrl
     }).then(function (product) {
-      res.json(product);
+      if (product === "deleted"){
+        location.assign("/cart")
+      }
     });
     //$.delete("/api/shoppingCart/" + productId)
   }
