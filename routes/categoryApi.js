@@ -7,7 +7,7 @@ module.exports = function (app) {
     app.get("/api/categories", function (req, res) {
         db.Categories.findAll({}).then(function (categories) {
             
-            var userName = ls.get('UserName');
+            var userName = ls.get('firstName');
 
             var obj = {
                 categories: categories,

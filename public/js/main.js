@@ -18,7 +18,7 @@ $(document).ready(function () {
     function createNavBar(data) {
         console.log(data)
         if (data.user) {
-            $("#UserNameMainTitle").text("Welcome " + data.user)
+            $("#UserNameMainTitle").text( data.user)
             $("#signupLink").hide();
             $("#signinLink").hide();
             $("#signoutLink").show();

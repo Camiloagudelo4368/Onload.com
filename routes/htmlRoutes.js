@@ -81,7 +81,8 @@ module.exports = function (app) {
 
           var objUserTypeAll = {
             products: newproduct,
-            total: total.toFixed(2)
+            total: total.toFixed(2),
+            total2 : total + "00"
           }
 
           res.render("shoppingcart", objUserTypeAll)
@@ -205,6 +206,7 @@ module.exports = function (app) {
         // console.log('see above hhhh')
         product.forEach(item => item.categoryName = item['CategoryProducts.Category.categoryName'])
 
+        
         // console.log('after')
         // console.log(product)
         var indexFinal = product.length - 1;

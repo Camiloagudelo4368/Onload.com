@@ -64,7 +64,7 @@
 
   <form class="bttn" action="/paysuccess" method="post">
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-      data-key="pk_test_wUg2srzfzQ765a55uHxDuozS00je8H7WJi" data-amount="20000" data-name="Unload.com"
+      data-key="pk_test_wUg2srzfzQ765a55uHxDuozS00je8H7WJi" data-amount="{{total2}}" data-name="Unload.com"
       data-description="Thank you for your order" data-locale="auto" data-currency="usd">
       </script>
     <input type="hidden" name="chargeAmount" value="{{total}}">

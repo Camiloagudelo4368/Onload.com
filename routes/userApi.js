@@ -17,6 +17,7 @@ module.exports = function (app) {
             // console.log("user  ", user.userId)
             ls.set('UserId', user.userId)
             ls.set('UserName', user.userName)
+            ls.set('firstName', user.firstName + " " + user.lastName)
             // console.log("check ", ls("UserId"))
             res.render("index")            
             // Passwords match
@@ -113,6 +114,7 @@ module.exports = function (app) {
         // console.log("user  ", user.userId)
         ls.set('UserId', user.userId)
         ls.set('UserName', user.userName)
+        ls.set('firstName', user.firstName + " " + user.lastName)
 
         // console.log("check ", ls("UserId"))
         res.render("index")
